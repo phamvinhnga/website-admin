@@ -19,5 +19,8 @@ jobs:
           uses: actions/setup-node@v3
           with:
             node-version: 16
-        - run: npm install
-        - run: npm build --prod
+        - name: Build Angular
+          run: |
+            cd path/to/angular/project
+            npm ci
+            ng build --configuration=production
