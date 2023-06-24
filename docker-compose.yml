@@ -7,4 +7,6 @@ services:
         ports:
             - 4200:4200
         labels:
+            - "traefik.enable=true"
             - "traefik.http.routers.mycontainer.rule=Host(`admin.huyenduc.click`)"
+            - "traefik.http.routers.mycontainer.entrypoints=http"
