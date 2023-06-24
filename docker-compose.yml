@@ -6,3 +6,5 @@ services:
         container_name: website-admin
         ports:
             - 4200:4200
+        labels:
+            - "traefik.http.routers.mycontainer.rule=Host(`admin.huyenduc.click`)"
