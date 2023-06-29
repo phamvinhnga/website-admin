@@ -8,8 +8,11 @@ services:
             - website-network
         ports:
             - 4200:4200
-        environment:
-            - VIRTUAL_HOST=admin.huyenduc.click
+
+volumes:
+    website-volume:
+        name: website-admin-volume
+
 networks:
   website-network:
     external: true
