@@ -1,16 +1,20 @@
-export class BasePageOutputModel<T>{
-    totalItem!:number;
-    items!:T[];
-}
-
-export class BasePageInputModel{
-    skipCount:number = 0;
-    maxCountResult:number = 50;
-    search:string = '';
-}
-export interface IBasePageInputModel{
-    skipCount:number | undefined;
-    maxCountResult:number | undefined;
-    search:string | undefined
-}
+export class BasePaginationInputDto {
+    maxCountResult: number = 999999;
+    skipCount: number = 0;
+    sorting: string | undefined;
+    listCriterias: BaseCriteriaRequestDto[] | undefined;
+  }
+  
+  export class BaseCriteriaRequestDto {
+    property: string | undefined;
+    option: OptionCriteriaRequest | undefined;
+    value: string | undefined;
+  }
+  
+  export enum OptionCriteriaRequest {
+    Equals,
+    NotEquals,
+    Contains,
+    StartsWith,
+  }
   

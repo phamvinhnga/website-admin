@@ -65,7 +65,7 @@ export class PostEditComponent extends BaseComponent implements OnInit {
     }
     const input = PostOutputModel.fromJS(this.form?.value);
     input.thumbnail = this.listFileImage.length > 0 ? this.listFileImage[0] : undefined;
-    const $api = input.id == 0 ? this.postService.create(input) : this.postService.update(input);
+    const $api = input.id == 0 ? this.postService.create(input) : this.postService.update(input.id, input);
     return $api.subscribe(res => {
       this.messageService.add({severity:'success', summary: 'Lưu thành công', life: 1000});
       this.router.navigateByUrl('cms/post/' + this.typePost);

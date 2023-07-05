@@ -47,8 +47,8 @@ export class PostService {
     return this.httpClient.post(`${_prefix}/post`, input);
   }
 
-  update(input:PostInputModel){
-    return this.httpClient.put(`${_prefix}/post`, input);
+  update(id:number, input:PostInputModel){
+    return this.httpClient.put(`${_prefix}/post/${id}`, input);
   }
 
   delete(id:number){
