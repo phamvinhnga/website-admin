@@ -1,86 +1,98 @@
-import { FileModel } from "./file.model";
+import { FileImageDto } from "./file.model";
 
-export class PostInputModel implements IPostInputModel {
-  id:number | undefined;
-  title:string | undefined;
-  type:string | undefined;
-  content:string | undefined;
-  summary:string | undefined;
-  thumbnail:FileModel | undefined;
+export interface IPostInputDto {
+  id?: number;
+  title?: string;
+  type?: string;
+  content?: string;
+  summary?: string;
+  permalink?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  thumbnail?: FileImageDto;
+  [key: string]: any;
+}
 
-  init(data?: any) {
-      if (data) {
-          this.id = data["id"];
-          this.title = data["title"];
-          this.type = data["type"];
-          this.content = data["content"];
-          this.summary = data["v"];
-          this.thumbnail = data["thumbnail"] ? FileModel.fromJS(data["thumbnail"]) : undefined;
-      }
+export class PostInputDto implements IPostInputDto {
+  id?: number;
+  title?: string;
+  type?: string;
+  content?: string;
+  summary?: string;
+  permalink?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  thumbnail?: FileImageDto;
+  [key: string]: any;
+
+  constructor(data?: any) {
+    this.init(data);
   }
   
-  static fromJS(data: object): PostInputModel {
-      data = typeof data === 'object' || data != null ? data : {};
-      let result = new PostInputModel();
-      result.init(data);
-      return result;
-  }
-}
-
-export interface IPostInputModel{
-  id:number | undefined;
-  title:string | undefined;
-  type:string | undefined;
-  content:string | undefined;
-  summary:string | undefined;
-  thumbnail:FileModel | undefined;
-}
-
-export class PostOutputModel implements IPostOutputModel {
-  id!:number;
-  title:string | undefined;
-  type:string | undefined;
-  content:string | undefined;
-  summary:string | undefined;
-  thumbnail:FileModel | undefined;
-  permalink:string | undefined;
-  metaTitle:string | undefined;
-  metaDescription:string | undefined;
-  createDate:string | Date | undefined;
-  createUser:number | undefined;
-
-  init(data?: any) {
-      if (data) {
-        this.id = data["id"];
-        this.title = data["title"];
-        this.type = data["type"];
-        this.content = data["content"];
-        this.summary = data["summary"];
-        this.permalink = data["permalink"];
-        this.metaTitle = data["metaTitle"];
-        this.metaDescription = data["metaDescription"];
-        this.createDate = data["createDate"];
-        this.createUser = data["createUser"];
-        this.thumbnail = data["thumbnail"] ? FileModel.fromJS(data["thumbnail"]) : undefined;
+  init(data?: any): void {
+    if (data) {
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          this[key] = data[key];
+        }
       }
+      this.thumbnail = data.thumbnail ? FileImageDto.fromJS(data.thumbnail) : undefined;
+    }
   }
-  
-  static fromJS(data: object): PostOutputModel {
-      data = typeof data === 'object' || data != null ? data : {};
-      let result = new PostOutputModel();
-      result.init(data);
-      return result;
+
+  static fromJS(data: object): PostInputDto {
+    data = typeof data === 'object' && data !== null ? data : {};
+    const result = new PostInputDto();
+    result.init(data);
+    return result;
   }
 }
-export interface IPostOutputModel{
-  id:number;
-  title:string | undefined;
-  content:string | undefined;
-  summary:string | undefined;
-  thumbnail:FileModel | undefined;
-  permalink:string | undefined;
-  metaTitle:string | undefined;
-  metaDescription:string | undefined;
-  createDate:string | Date | undefined;
-  createUser:number | undefined;
+
+
+export interface IPostOutputDto {
+  id?: number;
+  title?: string;
+  type?: string;
+  content?: string;
+  summary?: string;
+  thumbnail?: FileImageDto;
+  createDate?: Date;
+  permalink?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  createUser?: number;
+  [key: string]: any;
+}
+
+export class PostOutputDto implements IPostOutputDto {
+  id?: number;
+  title?: string;
+  type?: string;
+  content?: string;
+  summary?: string;
+  thumbnail?: FileImageDto;
+  createDate?: Date;
+  permalink?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  createUser?: number;
+  [key: string]: any;
+
+  init(data?: any): void {
+    if (data) {
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          this[key] = data[key];
+        }
+      }
+      this.thumbnail = data.thumbnail ? FileImageDto.fromJS(data.thumbnail) : undefined;
+    }
+  }
+
+  static fromJS(data: object): PostOutputDto {
+    data = typeof data === 'object' && data !== null ? data : {};
+    const result = new PostOutputDto();
+    result.init(data);
+    return result;
+  }
 }

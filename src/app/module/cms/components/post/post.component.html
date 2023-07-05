@@ -1,5 +1,5 @@
 <div id="post-manager"
-    *ngIf="data" 
+    *ngIf="dataTable" 
 >
     <div class="margin-b-30">
         <h5>
@@ -10,12 +10,12 @@
 
     <p-table
         #dtTmp
-        [value]="data.items" 
+        [value]="dataTable.items" 
         [scrollable]="true"
         [paginator]="true"
         [showCurrentPageReport]="true" 
         [rows]="50"
-        [totalRecords]="data.totalItem"
+        [totalRecords]="dataTable.totalCount"
         [rowsPerPageOptions]="[{ showAll: 'Tất cả' },50,100,150]"
         [globalFilterFields]="['title']"
         styleClass="p-datatable-gridlines"
@@ -25,9 +25,8 @@
             <span class="p-input-icon-left">
                 <i class="pi pi-search"></i>
                 <input
+                    [(ngModel)]="filterTable.listCriterias[0].value"
                     pInputText
-                    [(ngModel)]="search"
-                    (input)="dtTmp.filterGlobal($any($event.target)?.value, 'startsWith')"
                     class="p-inputtext-sm" type="text" 
                     placeholder="Tìm kiếm bài viết">         
             </span>

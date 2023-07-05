@@ -2,35 +2,40 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
-import { MessageService } from 'primeng/api';
-import { Constants } from 'src/app/module/shared/common/constants';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConvertViToEn } from 'src/app/module/shared/common/function';
 import { BaseComponent } from 'src/app/module/shared/model/base.component.model';
-import { FileModel } from 'src/app/module/shared/model/file.model';
-import { PostOutputModel } from 'src/app/module/shared/model/post.model';
-import { PostService } from 'src/app/module/shared/service/post.service';
+import { BasePaginationInputDto } from 'src/app/module/shared/model/base.model';
+import { FileDto } from 'src/app/module/shared/model/file.model';
+import { PostInputDto, PostOutputDto } from 'src/app/module/shared/model/post.model';
+import { BaseService } from 'src/app/module/shared/service/base.service';
 import { environment } from 'src/environments/environment';
 const _websiteURL = `${environment.websiteURL}`;
+const _prefix = `${environment.coreServerURL}/api/post`;
 
 @Component({
-  selector: 'app-edit',
+  selector: 'app-post-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss']
 })
-export class PostEditComponent extends BaseComponent implements OnInit {
+export class PostEditComponent extends BaseComponent<PostInputDto, PostOutputDto>  implements OnInit {
 
   typePost:any;
   displayBasic = false;
   permalinkRoot:string = `${_websiteURL}/`;
+
   constructor(
-    private readonly postService:PostService,
-    private readonly router:Router,
-    private readonly activatedRoute: ActivatedRoute,
-    private readonly messageService:MessageService
-  ) {
-    super();
+    public override readonly confirmationService:ConfirmationService,
+    public override readonly messageService:MessageService,
+    public override readonly activatedRoute: ActivatedRoute,
+    public override readonly baseService:BaseService<PostInputDto, PostOutputDto>
+    ) {
+    super(confirmationService, baseService, messageService, activatedRoute);
+    this.filterTable = new BasePaginationInputDto();
+    this.baseUrl = _prefix;
     this.summernoteOptions.height = 300;
   }
+  
 
   ngOnInit(): void {
     const id = Number(this.activatedRoute.snapshot.params['id'] || 0);
@@ -41,7 +46,7 @@ export class PostEditComponent extends BaseComponent implements OnInit {
     this.getById(id);
   }
 
-  get thumbnail() : FileModel | undefined{
+  get thumbnail() : FileDto | undefined{
     if(!this.form || !this.form.controls['thumbnail'].value){
       return undefined;
     }
@@ -59,16 +64,16 @@ export class PostEditComponent extends BaseComponent implements OnInit {
     this.displayBasic = true;
   }
 
-  save(){
+  onSave(){
     if(this.form?.invalid){
       return;
     }
-    const input = PostOutputModel.fromJS(this.form?.value);
+    const input = PostOutputDto.fromJS(this.form?.value);
     input.thumbnail = this.listFileImage.length > 0 ? this.listFileImage[0] : undefined;
-    const $api = input.id == 0 ? this.postService.create(input) : this.postService.update(input.id, input);
+    const $api = input.id == 0 ? this.baseService.post(this.baseUrl, input) : this.baseService.put(this.baseUrl, input?.id?.toString() || '0', input);
     return $api.subscribe(res => {
       this.messageService.add({severity:'success', summary: 'Lưu thành công', life: 1000});
-      this.router.navigateByUrl('cms/post/' + this.typePost);
+    //   this.router.navigateByUrl('cms/post/' + this.typePost);
     });
   }
 
@@ -84,7 +89,7 @@ export class PostEditComponent extends BaseComponent implements OnInit {
   private getById(id:number){
     if(id != 0){
       this.title = 'Sửa bài viết';
-      this.postService.getById(id).subscribe(res => {
+      this.baseService.get(this.baseUrl, id.toString()).subscribe(res => {
         this.buildForm(res);
       })
     }
@@ -94,7 +99,7 @@ export class PostEditComponent extends BaseComponent implements OnInit {
     }
   }
 
-  private buildForm(data?:PostOutputModel | undefined){
+  private buildForm(data?:PostOutputDto | undefined){
     this.form = new FormGroup({
       id: new FormControl(data ? data.id : 0, Validators.required),
       title: new FormControl(data ? data.title : null, Validators.required),

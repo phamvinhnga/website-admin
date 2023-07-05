@@ -1,29 +1,39 @@
-export class FileModel implements IFileModel {
-    id:string | undefined;
-    name:string | undefined;
-    url:string | undefined | ArrayBuffer;
-    type:string | undefined;
+export class IFileDto {
+    id?: string;
+    name?: string;
+    type?: string;
+    url?: string;
+    [key: string]: any;
+}
 
-    init(data?: any) {
+export class FileDto implements IFileDto {
+    id?: string;
+    name?: string;
+    type?: string;
+    url?: string;
+    [key: string]: any;
+
+    constructor(data?: any) {
+        this.init(data);
+    }
+
+    init(data?: any): void {
         if (data) {
-            this.id = data["id"];
-            this.name = data["name"];
-            this.url = data["url"];
-            this.type = data["type"];
+            for (const key in data) {
+                if (data.hasOwnProperty(key)) {
+                    this[key] = data[key];
+                }
+            }
         }
     }
-    
-    static fromJS(data: object): FileModel {
-        data = typeof data === 'object' || data ? data : {};
-        let result = new FileModel();
+
+    static fromJS(data: object): FileDto {
+        data = typeof data === 'object' && data !== null ? data : {};
+        const result = new FileDto();
         result.init(data);
         return result;
     }
 }
 
-export interface IFileModel{
-    id:string | undefined;
-    name:string | undefined;
-    url:string | undefined | ArrayBuffer;
-    type:string | undefined;
+export class FileImageDto extends FileDto {
 }
