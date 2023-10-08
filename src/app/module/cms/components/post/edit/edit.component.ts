@@ -25,6 +25,7 @@ export class PostEditComponent extends BaseComponent<PostInputDto, PostOutputDto
   permalinkRoot:string = `${_websiteURL}/`;
 
   constructor(
+    private router:Router,
     public override readonly confirmationService:ConfirmationService,
     public override readonly messageService:MessageService,
     public override readonly activatedRoute: ActivatedRoute,
@@ -73,7 +74,7 @@ export class PostEditComponent extends BaseComponent<PostInputDto, PostOutputDto
     const $api = input.id == 0 ? this.baseService.post(this.baseUrl, input) : this.baseService.put(this.baseUrl, input?.id?.toString() || '0', input);
     return $api.subscribe(res => {
       this.messageService.add({severity:'success', summary: 'Lưu thành công', life: 1000});
-    //   this.router.navigateByUrl('cms/post/' + this.typePost);
+      this.router.navigateByUrl('cms/post/' + this.typePost);
     });
   }
 
