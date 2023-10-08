@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
   websiteURL: 'http://huyenduc.click',
-  coreServerURL: 'https://localhost:5000'
+  coreServerURL: 'http://api.huyenduc.click'
 };
 
