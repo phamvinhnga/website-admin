@@ -1,12 +1,13 @@
 import { createReducer, on } from "@ngrx/store";
-import * as LoginPageActions from "./login-page.actions";
-import { ITokenUserSignInState, IUserSignInState } from "./login-page.state";
+import { IUserSignInState } from "./login-page.state";
+import { LoginPageGroupActions } from "./login-page.actions";
+import { AuthEnum } from "src/app/enums/auth.enum";
 
 export const initialState: IUserSignInState = {} as IUserSignInState;
 
 export const storeTokenReducer = createReducer(
     initialState,
-    on(LoginPageActions.storeCurrentUserAction, (state, {username, password}) => {
+    on(LoginPageGroupActions.storeCurrentUserAction, (state, {username, password}) => {
         return {
             ...state,
             userInfomation: {
@@ -15,7 +16,9 @@ export const storeTokenReducer = createReducer(
             }
         }
     }),
-    on(LoginPageActions.storeTokenAction, (state, {token}) => {
+    on(LoginPageGroupActions.storeTokenAction, (state, {token}) => {
+        localStorage.setItem(AuthEnum[AuthEnum.AccessToken], token.accessToken);
+        localStorage.setItem(AuthEnum[AuthEnum.RefreshToken], token.refreshToken);
         return {
             ...state,
             token: token

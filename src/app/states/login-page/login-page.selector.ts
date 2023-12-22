@@ -1,15 +1,35 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { LoginPageFeatureKey } from 'src/app/enums/state.enum';
-import { ITokenUserSignInState, IUserSignInState } from './login-page.state';
+import { ITokenUserSignInState, IUserInfomationSignInState, IUserSignInState } from './login-page.state';
+import { LoginPageStateEnum } from 'src/app/enums/state.enum';
 
-export const selectFeature = createFeatureSelector<IUserSignInState>(LoginPageFeatureKey.StoreToken);
+export class LoginPageGroupSelectors {
 
-export const tokenSelector = createSelector(
-    selectFeature,
-    (state: IUserSignInState) => state.token
-);
+    static selectFeature = createFeatureSelector<IUserSignInState>(LoginPageStateEnum.FeatureKey);
 
-export const currentUserSelector = createSelector(
-    selectFeature,
-    (state: IUserSignInState) => state.userInfomation
-);
+    static tokenSelector = createSelector(
+        LoginPageGroupSelectors.selectFeature,
+        (state: IUserSignInState) => state.token
+    );
+
+    static currentUserSelector = createSelector(
+        LoginPageGroupSelectors.selectFeature,
+        (state: IUserSignInState) => state.userInfomation
+    );
+
+    static userSignInSelector = createSelector(
+        LoginPageGroupSelectors.tokenSelector,
+        LoginPageGroupSelectors.currentUserSelector,
+        (token: ITokenUserSignInState, userInfomation:IUserInfomationSignInState) => {
+            return {
+                token: token,
+                userInfomation: userInfomation
+            }
+        }
+    );
+    
+    static  abcInSelector = createSelector(
+        LoginPageGroupSelectors.selectFeature,
+        (state: IUserSignInState) => state
+    );
+}
+

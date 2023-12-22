@@ -3,10 +3,9 @@ import { Router } from '@angular/router';
 import { IAuthModel } from '../shared/model/auth.model';
 import { AuthService } from '../shared/service/auth.service';
 import { Store } from '@ngrx/store';
-import * as LoginPageActions from 'src/app/states/login-page/login-page.actions';
 import { UserSignInOutputModel } from 'src/app/models/auth.model';
-import { currentUserSelector, tokenSelector } from 'src/app/states/login-page/login-page.selector';
 import { ITokenUserSignInState } from 'src/app/states/login-page/login-page.state';
+import { LoginPageGroupActions } from 'src/app/states/login-page/login-page.actions';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +16,10 @@ export class LoginComponent {
 
   username!: string;
   password!: string;
-
+  token = {
+    accessToken: "xx",
+    refreshToken: "22"
+  } as ITokenUserSignInState;
   constructor(
     private readonly store:Store,
     private readonly authService:AuthService,
@@ -32,6 +34,10 @@ export class LoginComponent {
     // this.store.select(currentUserSelector).subscribe(res => {
     //   console.log(res);
     // });
+    
+    // this.store.select(userSignInSelector).subscribe(res => {
+    //   console.log(res);
+    // });
   }
 
   onSubmit(){
@@ -39,8 +45,10 @@ export class LoginComponent {
       accessToken: "xx",
       refreshToken: "22"
     } as ITokenUserSignInState;
-    this.store.dispatch(LoginPageActions.storeTokenAction({ token  }));
-    this.store.dispatch(LoginPageActions.storeCurrentUserAction({ username: "NGA PHAM", password: "AAAAAAAAAAAAAA"  }));
+    this.store.dispatch(LoginPageGroupActions.storeTokenAction({ token: token  }));
+
+    this.store.dispatch(LoginPageGroupActions.storeCurrentUserAction({ username: this.username, password: this.password  }));
+
     return;
 
     return this.authService.signIn({
@@ -48,7 +56,7 @@ export class LoginComponent {
       password: this.password
     } as IAuthModel).subscribe(
       (token:UserSignInOutputModel) => {
-        this.store.dispatch(LoginPageActions.storeTokenAction({ token }));
+        this.store.dispatch(LoginPageGroupActions.storeTokenAction({ token }));
         this.router.navigateByUrl('cms');
       }
     );

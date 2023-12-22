@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { currentUserSelector, tokenSelector } from './states/login-page/login-page.selector';
 import { forkJoin } from 'rxjs';
+import { LoginPageGroupSelectors } from './states/login-page/login-page.selector';
 
 @Component({
   selector: 'app-root',
@@ -12,18 +12,10 @@ export class AppComponent {
   constructor(
     private readonly store:Store
   ) {}
+  
   ngOnInit() {
-    // this.store.select(tokenSelector).subscribe(res => {
-    //   console.log(res);
-    // });
-    // this.store.select(currentUserSelector).subscribe(res => {
-    //   console.log(res);
-    // });
-    forkJoin([
-      this.store.select(tokenSelector),
-      this.store.select(currentUserSelector)
-    ]).subscribe(res =>{
+    this.store.select(LoginPageGroupSelectors.abcInSelector).subscribe(res => {
       console.log(res);
-    })
+    });
   }
 }
