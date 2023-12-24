@@ -10,11 +10,15 @@ import { JwtInterceptor } from './Interceptor/jwt.interceptor';
 import { LoginModule } from './module/login/login.module';
 import { AuthService } from './module/shared/service/auth.service';
 import { StoreModule } from '@ngrx/store';
+import { AppLayoutModule } from './module/layout/app.layout.module';
+import { ToastModule } from 'primeng/toast';
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
+    AppLayoutModule,
+    ToastModule,
     StoreModule.forRoot({}),
     BrowserModule,
     BrowserAnimationsModule,

@@ -4,7 +4,7 @@ import { IAuthModel } from '../shared/model/auth.model';
 import { AuthService } from '../shared/service/auth.service';
 import { Store } from '@ngrx/store';
 import { UserSignInOutputModel } from 'src/app/models/auth.model';
-import { ITokenUserSignInState } from 'src/app/states/login-page/login-page.state';
+import { ITokenUserSignInState, IUserInfomationSignInState } from 'src/app/states/login-page/login-page.state';
 import { LoginPageGroupActions } from 'src/app/states/login-page/login-page.actions';
 
 @Component({
@@ -46,8 +46,7 @@ export class LoginComponent {
       refreshToken: "22"
     } as ITokenUserSignInState;
     this.store.dispatch(LoginPageGroupActions.storeTokenAction({ token: token  }));
-
-    this.store.dispatch(LoginPageGroupActions.storeCurrentUserAction({ username: this.username, password: this.password  }));
+    this.store.dispatch(LoginPageGroupActions.storeCurrentUserAction({ userInfomation: { id: 123, surname: "nga pham", name: "xas", fullName: "2323", extentionId: "121212"} as IUserInfomationSignInState }));
 
     return;
 

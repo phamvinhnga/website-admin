@@ -1,1 +1,23 @@
-<router-outlet></router-outlet>
+
+<ng-container *ngIf="true; then loginLayoutTmp else managerLayoutTmp"></ng-container>
+
+<ng-template #loginLayoutTmp>
+    <router-outlet></router-outlet>
+</ng-template>
+
+<ng-template #managerLayoutTmp>
+    <div class="layout-wrapper">
+        <app-topbar></app-topbar>
+        <div class="layout-sidebar">
+            <app-sidebar></app-sidebar>
+        </div>
+        <div class="layout-main-container">
+            <div class="layout-main">
+                <router-outlet></router-outlet>
+            </div>
+            <app-footer></app-footer>
+        </div>
+        <div class="layout-mask"></div>
+    </div>
+    <p-toast></p-toast>
+</ng-template>

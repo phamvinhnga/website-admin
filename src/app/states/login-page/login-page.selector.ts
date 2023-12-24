@@ -11,6 +11,12 @@ export class LoginPageGroupSelectors {
         (state: IUserSignInState) => state.token
     );
 
+    static isAuthenticatedSelector = createSelector(
+        LoginPageGroupSelectors.selectFeature,
+        (state: IUserSignInState) : boolean => !state.userInfomation ? false : true
+    );
+
+
     static currentUserSelector = createSelector(
         LoginPageGroupSelectors.selectFeature,
         (state: IUserSignInState) => state.userInfomation
@@ -19,7 +25,7 @@ export class LoginPageGroupSelectors {
     static userSignInSelector = createSelector(
         LoginPageGroupSelectors.tokenSelector,
         LoginPageGroupSelectors.currentUserSelector,
-        (token: ITokenUserSignInState, userInfomation:IUserInfomationSignInState) => {
+        (token: ITokenUserSignInState | undefined, userInfomation:IUserInfomationSignInState | undefined) => {
             return {
                 token: token,
                 userInfomation: userInfomation
