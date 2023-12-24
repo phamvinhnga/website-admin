@@ -14,7 +14,6 @@ import * as StoreTokenReducers from 'src/app/states/login-page/login-page.reduce
   ],
   imports: [
     CommonModule,
-    CommonModule,
     FormsModule,
     ButtonModule,
     InputTextModule,

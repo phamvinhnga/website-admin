@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IAuthModel } from '../shared/model/auth.model';
 import { AuthService } from '../shared/service/auth.service';
 import { Store } from '@ngrx/store';
@@ -13,14 +13,11 @@ import { LoginPageGroupActions } from 'src/app/states/login-page/login-page.acti
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-
   username!: string;
   password!: string;
-  token = {
-    accessToken: "xx",
-    refreshToken: "22"
-  } as ITokenUserSignInState;
+
   constructor(
+    private route: ActivatedRoute, 
     private readonly store:Store,
     private readonly authService:AuthService,
     private readonly router:Router
@@ -28,16 +25,7 @@ export class LoginComponent {
   }
 
   ngOnInit() {
-    // this.store.select(tokenSelector).subscribe(res => {
-    //   console.log(res);
-    // });
-    // this.store.select(currentUserSelector).subscribe(res => {
-    //   console.log(res);
-    // });
-    
-    // this.store.select(userSignInSelector).subscribe(res => {
-    //   console.log(res);
-    // });
+    console.log(this.route.snapshot.data);
   }
 
   onSubmit(){
@@ -47,9 +35,7 @@ export class LoginComponent {
     } as ITokenUserSignInState;
     this.store.dispatch(LoginPageGroupActions.storeTokenAction({ token: token  }));
     this.store.dispatch(LoginPageGroupActions.storeCurrentUserAction({ userInfomation: { id: 123, surname: "nga pham", name: "xas", fullName: "2323", extentionId: "121212"} as IUserInfomationSignInState }));
-
     return;
-
     return this.authService.signIn({
       userName: this.username,
       password: this.password

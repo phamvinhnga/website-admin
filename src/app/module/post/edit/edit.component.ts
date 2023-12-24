@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ConvertViToEn } from 'src/app/module/shared/common/function';
+import { ConvertViToEn } from 'src/app/functions/language.function';
 import { BaseComponent } from 'src/app/module/shared/model/base.component.model';
 import { BasePaginationInputDto } from 'src/app/module/shared/model/base.model';
 import { FileDto } from 'src/app/module/shared/model/file.model';

@@ -1,23 +1,21 @@
-
-<ng-container *ngIf="true; then loginLayoutTmp else managerLayoutTmp"></ng-container>
-
-<ng-template #loginLayoutTmp>
-    <router-outlet></router-outlet>
-</ng-template>
-
-<ng-template #managerLayoutTmp>
-    <div class="layout-wrapper">
-        <app-topbar></app-topbar>
-        <div class="layout-sidebar">
-            <app-sidebar></app-sidebar>
-        </div>
-        <div class="layout-main-container">
-            <div class="layout-main">
-                <router-outlet></router-outlet>
+<container-element [ngSwitch]="pageType">
+    <some-element *ngSwitchCase="pageTypeEnum.Login">
+        <router-outlet></router-outlet>
+    </some-element>
+    <some-element *ngSwitchCase="pageTypeEnum.Manage">
+        <div class="layout-wrapper">
+            <app-topbar></app-topbar>
+            <div class="layout-sidebar">
+                <app-sidebar></app-sidebar>
             </div>
-            <app-footer></app-footer>
+            <div class="layout-main-container">
+                <div class="layout-main">
+                    <router-outlet></router-outlet>
+                </div>
+                <app-footer></app-footer>
+            </div>
+            <div class="layout-mask"></div>
         </div>
-        <div class="layout-mask"></div>
-    </div>
-    <p-toast></p-toast>
-</ng-template>
+        <p-toast></p-toast>
+    </some-element>
+</container-element>
