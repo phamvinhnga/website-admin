@@ -1,4 +1,4 @@
 export enum RoutingEnum {
     LoginPage = '/',
-    PostPage = 'baiViet'
+    PostPage = 'bai-viet'
 }

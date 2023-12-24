@@ -15,6 +15,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { ToastModule } from "primeng/toast";
 import { MessageService } from 'primeng/api';
 import { LoginPageTypeResolver } from './resolvers/page-type.resolver';
+import { AuthGuard } from './guards/auth.guard';
 @NgModule({
   declarations: [
     AppComponent
@@ -33,6 +34,7 @@ import { LoginPageTypeResolver } from './resolvers/page-type.resolver';
   ],
   providers: [
     LoginPageTypeResolver,
+    AuthGuard,
     MessageService,
     { 
       provide: HTTP_INTERCEPTORS, 

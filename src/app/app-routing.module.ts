@@ -8,14 +8,12 @@ import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    component: LoginComponent,
-    runGuardsAndResolvers: "always",
-    resolve: { pageType: LoginPageTypeResolver },
+    component: LoginComponent
   },
   {
-    path: 'post',
+    path: RoutingEnum.PostPage,
     loadChildren: () => import('./module/post/post.module').then((m) => m.PostModule),
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   { path: '**', redirectTo: '' }, // Chuyển hướng về trang chính khi URL không hợp lệ
 ];

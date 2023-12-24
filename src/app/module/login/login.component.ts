@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { UserSignInOutputModel } from 'src/app/models/auth.model';
 import { ITokenUserSignInState, IUserInfomationSignInState } from 'src/app/states/login-page/login-page.state';
 import { LoginPageGroupActions } from 'src/app/states/login-page/login-page.actions';
+import { RoutingEnum } from 'src/app/enums/routing.enum';
 
 @Component({
   selector: 'app-login',
@@ -35,6 +36,7 @@ export class LoginComponent {
     } as ITokenUserSignInState;
     this.store.dispatch(LoginPageGroupActions.storeTokenAction({ token: token  }));
     this.store.dispatch(LoginPageGroupActions.storeCurrentUserAction({ userInfomation: { id: 123, surname: "nga pham", name: "xas", fullName: "2323", extentionId: "121212"} as IUserInfomationSignInState }));
+    this.router.navigateByUrl(RoutingEnum.PostPage);
     return;
     return this.authService.signIn({
       userName: this.username,
