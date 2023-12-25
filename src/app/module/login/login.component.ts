@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { IAuthModel, UserSignInOutputModel } from 'src/app/models/auth.model';
-import { ITokenUserSignInState, IUserInfomationSignInState } from 'src/app/states/login-page/login-page.state';
+import { ITokenUserSignInState } from 'src/app/states/login-page/login-page.state';
 import { LoginPageGroupActions } from 'src/app/states/login-page/login-page.actions';
 import { RoutingEnum } from 'src/app/enums/routing.enum';
 import { AuthService } from 'src/app/services/auth.service';
@@ -17,33 +17,34 @@ export class LoginComponent {
   password!: string;
 
   constructor(
-    private route: ActivatedRoute, 
     private readonly store:Store,
     private readonly authService:AuthService,
     private readonly router:Router
   ) { 
   }
 
-  ngOnInit() {
-  }
-
   onSubmit(){
-    let token = {
-      accessToken: "xx",
-      refreshToken: "22"
-    } as ITokenUserSignInState;
+    // let token = {
+    //   accessToken: "xx",
+    //   refreshToken: "22"
+    // } as ITokenUserSignInState;
     
-    this.store.dispatch(LoginPageGroupActions.storeTokenAction({ token: token  }));
-    // this.store.dispatch(LoginPageGroupActions.storeCurrentUserAction({ userInfomation: { id: 123, surname: "nga pham", name: "xas", fullName: "2323", extentionId: "121212"} as IUserInfomationSignInState }));
-    this.router.navigateByUrl(RoutingEnum.PostPage);
-    return;
+    // this.store.dispatch(LoginPageGroupActions.storeTokenAction({ token: token  }));
+    // // this.store.dispatch(LoginPageGroupActions.storeCurrentUserAction({ userInfomation: { id: 123, surname: "nga pham", name: "xas", fullName: "2323", extentionId: "121212"} as IUserInfomationSignInState }));
+    // return;
     return this.authService.signIn({
       userName: this.username,
       password: this.password
     } as IAuthModel).subscribe(
       (token:UserSignInOutputModel) => {
-        this.store.dispatch(LoginPageGroupActions.storeTokenAction({ token }));
-        this.router.navigateByUrl('cms');
+        this.store.dispatch(LoginPageGroupActions.storeTokenAction({ token: {
+          refreshToken: token.refreshToken,
+          accessToken: token.accessToken,
+          expire: token.expire
+        } as ITokenUserSignInState }));
+        setTimeout(() => {
+          this.router.navigateByUrl(RoutingEnum.PostPage);
+        }, 100);
       }
     );
   }

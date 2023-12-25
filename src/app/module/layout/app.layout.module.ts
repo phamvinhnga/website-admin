@@ -14,6 +14,7 @@ import { AppSidebarComponent } from "./app.sidebar.component";
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { LoginPageGroupActions } from 'src/app/states/login-page/login-page.actions';
+import { LayoutService } from './service/app.layout.service';
 
 @NgModule({
     declarations: [
@@ -39,6 +40,9 @@ import { LoginPageGroupActions } from 'src/app/states/login-page/login-page.acti
         AppFooterComponent,
         AppMenuComponent,
         AppSidebarComponent
+    ],
+    providers: [
+        LayoutService
     ]
 })
 export class AppLayoutModule { 

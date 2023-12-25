@@ -18,7 +18,6 @@ export const storeTokenReducer = createReducer(
         }
     }),
     on(LoginPageGroupActions.storeCurrentUserApiAction, (state, { userInfomation }) => {
-        debugger
         return {
             ...state,
             userInfomation: userInfomation
