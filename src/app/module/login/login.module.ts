@@ -7,6 +7,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { StoreModule } from '@ngrx/store';
 import { LoginPageStateEnum } from 'src/app/enums/state.enum';
 import * as StoreTokenReducers from 'src/app/states/login-page/login-page.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { LoginPageEffects } from 'src/app/states/login-page/login-page.effect';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,8 @@ import * as StoreTokenReducers from 'src/app/states/login-page/login-page.reduce
     FormsModule,
     ButtonModule,
     InputTextModule,
-    StoreModule.forFeature(LoginPageStateEnum.FeatureKey, StoreTokenReducers.storeTokenReducer)
+    StoreModule.forFeature(LoginPageStateEnum.FeatureKey, StoreTokenReducers.storeTokenReducer),
+    EffectsModule.forFeature([LoginPageEffects])
   ],
   exports: [
     LoginComponent

@@ -13,7 +13,7 @@ export class LoginPageGroupSelectors {
 
     static isAuthenticatedSelector = createSelector(
         LoginPageGroupSelectors.selectFeature,
-        (state: IUserSignInState) : boolean => !state.userInfomation ? false : true
+        (state: IUserSignInState) : boolean => !state.token?.accessToken ? false : true
     );
 
 

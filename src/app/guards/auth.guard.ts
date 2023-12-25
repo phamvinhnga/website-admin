@@ -11,7 +11,7 @@ export class AuthGuard implements CanActivate {
 
     constructor(
         private readonly store:Store,
-        private router: Router) {}
+        private readonly router: Router) {}
 
     canActivate() {
         return this.store.select(LoginPageGroupSelectors.isAuthenticatedSelector).pipe(map(isAuthenticated => {

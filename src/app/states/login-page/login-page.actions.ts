@@ -4,12 +4,20 @@ import { ITokenUserSignInState, IUserInfomationSignInState } from './login-page.
 
 export class LoginPageGroupActions {
 
+  static storeTokenFromLocalStoreAction = createAction(
+    LoginPageStateEnum.StoreTokenFromLocalStoreAction,
+  );
+
   static storeTokenAction = createAction(
     LoginPageStateEnum.StoreTokenAction, props<{ token: ITokenUserSignInState }>()
   );
 
-  static storeCurrentUserAction = createAction(
-    LoginPageStateEnum.StoreCurrentUserAction, props<{ userInfomation:IUserInfomationSignInState }>()
+  static storeCurrentUserApiAction = createAction(
+    LoginPageStateEnum.StoreCurrentUserApiAction, props<{ userInfomation:IUserInfomationSignInState }>()
   );
-  
+
+  static getCurrentUserApiAction = createAction(
+    LoginPageStateEnum.GetStoreCurrentUserApiAction
+  );
+
 };

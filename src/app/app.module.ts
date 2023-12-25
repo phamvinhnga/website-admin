@@ -8,14 +8,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { JwtInterceptor } from './Interceptor/jwt.interceptor';
 import { LoginModule } from './module/login/login.module';
-import { AuthService } from './module/shared/service/auth.service';
-import { StoreModule } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { AppLayoutModule } from './module/layout/app.layout.module';
 import { EffectsModule } from '@ngrx/effects';
 import { ToastModule } from "primeng/toast";
 import { MessageService } from 'primeng/api';
 import { LoginPageTypeResolver } from './resolvers/page-type.resolver';
 import { AuthGuard } from './guards/auth.guard';
+import { LoginPageGroupActions } from './states/login-page/login-page.actions';
 @NgModule({
   declarations: [
     AppComponent
@@ -47,4 +47,9 @@ import { AuthGuard } from './guards/auth.guard';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+  constructor(private store:Store){
+    this.store.dispatch(LoginPageGroupActions.storeTokenFromLocalStoreAction());
+  }
+}

@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IAuthModel } from '../shared/model/auth.model';
-import { AuthService } from '../shared/service/auth.service';
 import { Store } from '@ngrx/store';
-import { UserSignInOutputModel } from 'src/app/models/auth.model';
+import { IAuthModel, UserSignInOutputModel } from 'src/app/models/auth.model';
 import { ITokenUserSignInState, IUserInfomationSignInState } from 'src/app/states/login-page/login-page.state';
 import { LoginPageGroupActions } from 'src/app/states/login-page/login-page.actions';
 import { RoutingEnum } from 'src/app/enums/routing.enum';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +25,6 @@ export class LoginComponent {
   }
 
   ngOnInit() {
-    console.log(this.route.snapshot.data);
   }
 
   onSubmit(){
@@ -34,8 +32,9 @@ export class LoginComponent {
       accessToken: "xx",
       refreshToken: "22"
     } as ITokenUserSignInState;
+    
     this.store.dispatch(LoginPageGroupActions.storeTokenAction({ token: token  }));
-    this.store.dispatch(LoginPageGroupActions.storeCurrentUserAction({ userInfomation: { id: 123, surname: "nga pham", name: "xas", fullName: "2323", extentionId: "121212"} as IUserInfomationSignInState }));
+    // this.store.dispatch(LoginPageGroupActions.storeCurrentUserAction({ userInfomation: { id: 123, surname: "nga pham", name: "xas", fullName: "2323", extentionId: "121212"} as IUserInfomationSignInState }));
     this.router.navigateByUrl(RoutingEnum.PostPage);
     return;
     return this.authService.signIn({

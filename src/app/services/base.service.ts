@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { BasePaginationInputDto, BasePaginationOutputDto } from '../model/base.model';
 import { Injectable } from '@angular/core';
+import { BasePaginationInputDto, BasePaginationOutputDto } from '../models/base.model';
 
 @Injectable({
     providedIn: 'root'

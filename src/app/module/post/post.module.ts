@@ -12,11 +12,11 @@ import { MessageModule } from "primeng/message";
 import { MessagesModule } from "primeng/messages";
 import { ProgressSpinnerModule } from "primeng/progressspinner";
 import { TableModule } from "primeng/table";
-import { PostService } from "../shared/service/post.service";
 import { PostEditComponent } from "./edit/edit.component";
 import { PostComponent } from "./post.component";
 import { PostRoutingModule } from "./post-routing.module";
 import { ConfirmationService } from "primeng/api";
+import { PostService } from "src/app/services/post.service";
 
 @NgModule({
   declarations: [

@@ -1,8 +1,8 @@
 import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { PostInputDto, PostOutputDto } from '../model/post.model';
 import { BaseService } from './base.service';
+import { PostInputDto, PostOutputDto } from '../models/post.model';
 
 const _prefix = `${environment.coreServerURL}/api/post`;
 

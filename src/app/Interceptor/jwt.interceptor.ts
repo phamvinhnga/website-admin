@@ -5,19 +5,27 @@ import {
     HttpInterceptor,
     HttpEvent,
     HttpErrorResponse,
+    HttpStatusCode,
 } from '@angular/common/http';
-import { AuthService } from '../module/shared/service/auth.service';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, switchMap, take } from 'rxjs/operators';
+import { AuthService } from '../services/auth.service';
+import { LoginPageGroupActions } from '../states/login-page/login-page.actions';
+import { Store } from '@ngrx/store';
+import { ITokenUserSignInState } from '../states/login-page/login-page.state';
+import { AuthLocalStorageEnum } from '../enums/local-storage.enum';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
     constructor(
-        private authService: AuthService
+      private store:Store,
+      private router:Router,
+      private authService: AuthService
     ) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler) : Observable<HttpEvent<any>> {
-        const token = this.authService.getToken();
+        const token = localStorage.getItem(AuthLocalStorageEnum.AccessToken);
         let header:any = {
           'Access-Control-Allow-Origin': '*'
         }
@@ -29,20 +37,26 @@ export class JwtInterceptor implements HttpInterceptor {
         }
         return next.handle(request).pipe(
             catchError((error: HttpErrorResponse) => {
-              if (error.status === 401) {
+              if (error.status === HttpStatusCode.Unauthorized) {
                 return this.authService.refreshToken().pipe(
                   switchMap((res) => {
-                    this.authService.saveToken(res.accessToken, res.refreshToken);
+                    let token = {
+                      accessToken: res.accessToken,
+                      refreshToken: res.refreshToken
+                    } as ITokenUserSignInState;
+                    this.store.dispatch(LoginPageGroupActions.storeTokenAction({ token: token  }));
                     request = request.clone({
                       setHeaders: {
-                        Authorization: `Bearer ${this.authService.getToken()}`,
+                        Authorization: `Bearer ${localStorage.getItem(AuthLocalStorageEnum.AccessToken)}`,
                         'Access-Control-Allow-Origin': '*'
                       }
                     });
                     return next.handle(request);
                   }),
                   catchError((err) => {
-                    this.authService.logout();
+                    localStorage.removeItem(AuthLocalStorageEnum.AccessToken);
+                    localStorage.removeItem(AuthLocalStorageEnum.RefreshToken);
+                    this.router.navigateByUrl("/");
                     return throwError(err);
                   })
                 );

@@ -12,6 +12,8 @@ import { AppTopBarComponent } from './app.topbar.component';
 import { AppFooterComponent } from './app.footer.component';
 import { AppSidebarComponent } from "./app.sidebar.component";
 import { CommonModule } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { LoginPageGroupActions } from 'src/app/states/login-page/login-page.actions';
 
 @NgModule({
     declarations: [
@@ -39,4 +41,11 @@ import { CommonModule } from '@angular/common';
         AppSidebarComponent
     ]
 })
-export class AppLayoutModule { }
+export class AppLayoutModule { 
+
+    constructor(
+        private store:Store
+    ){
+        this.store.dispatch(LoginPageGroupActions.getCurrentUserApiAction());
+    }
+}

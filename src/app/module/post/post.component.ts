@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { BaseComponent } from 'src/app/module/shared/model/base.component.model';
-import { BaseCriteriaRequestDto, BasePaginationInputDto, OptionCriteriaRequest } from 'src/app/module/shared/model/base.model';
-import { PostInputDto, PostOutputDto } from 'src/app/module/shared/model/post.model';
-import { BaseService } from 'src/app/module/shared/service/base.service';
-import { PostService } from 'src/app/module/shared/service/post.service';
+import { BaseComponent } from 'src/app/models/base.component.model';
+import { BasePaginationInputDto, OptionCriteriaRequest, BaseCriteriaRequestDto } from 'src/app/models/base.model';
+import { PostInputDto, PostOutputDto } from 'src/app/models/post.model';
+import { BaseService } from 'src/app/services/base.service';
+import { PostService } from 'src/app/services/post.service';
 import { environment } from 'src/environments/environment';
 
 const _prefix = `${environment.coreServerURL}/api/post`;

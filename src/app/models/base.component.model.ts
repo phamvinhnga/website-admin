@@ -4,8 +4,8 @@ import { FormGroup } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { FileDto } from "./file.model";
-import { BaseService } from "../service/base.service";
 import { BasePaginationInputDto, BasePaginationOutputDto } from "./base.model";
+import { BaseService } from "../services/base.service";
 
 export class BaseComponent<TInputDto, TOutputDto>  {
 
