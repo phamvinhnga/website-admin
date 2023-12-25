@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, Inject, Renderer2, ViewChild } from '@angular/core';
 import { PageTypeEnum } from './enums/page-type.enum';
 import { NavigationEnd, Router } from '@angular/router';
 import { RoutingEnum } from './enums/routing.enum';
@@ -13,7 +13,7 @@ import { AppTopBarComponent } from './module/layout/app.topbar.component';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent {
 
   pageType: string | undefined;
   pageTypeEnum = PageTypeEnum;
@@ -133,8 +133,5 @@ export class AppComponent implements OnDestroy {
       'p-input-filled': this.layoutService.config.inputStyle === 'filled',
       'p-ripple-disabled': !this.layoutService.config.ripple
     }
-  }
-
-  ngOnDestroy() {
   }
 }
