@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { OptionCriteriaRequest } from 'src/app/enums/option-criteria.enum';
+import { RoutingEnum } from 'src/app/enums/routing.enum';
 import { BaseComponent } from 'src/app/models/base.component.model';
-import { BasePaginationInputDto, OptionCriteriaRequest, BaseCriteriaRequestDto } from 'src/app/models/base.model';
+import { BasePaginationInputDto, BaseCriteriaRequestDto } from 'src/app/models/base.model';
 import { PostInputDto, PostOutputDto } from 'src/app/models/post.model';
 import { BaseService } from 'src/app/services/base.service';
 import { PostService } from 'src/app/services/post.service';
@@ -19,6 +21,7 @@ const _prefix = `${environment.coreServerURL}/api/post`;
 
 export class PostComponent extends BaseComponent<PostInputDto, PostOutputDto> implements OnInit {
 
+  routingEnum = RoutingEnum;
   typePost:any;
   constructor(
     public override readonly confirmationService:ConfirmationService,
@@ -32,7 +35,7 @@ export class PostComponent extends BaseComponent<PostInputDto, PostOutputDto> im
   }
 
   ngOnInit() {
-    this.typePost = this.activatedRoute.snapshot.params['type'] || undefined;
+    this.typePost = this.activatedRoute.snapshot.params['postType'] || undefined;
     this.filterTable.listCriterias = [
       {
         property : 'Title',

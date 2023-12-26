@@ -1,6 +1,4 @@
-<div id="post-manager"
-    *ngIf="dataTable" 
->
+<div id="post-manager" >
     <div class="margin-b-30">
         <h5>
             <i class="pi pi-fw pi-home"></i>
@@ -10,12 +8,12 @@
 
     <p-table
         #dtTmp
-        [value]="dataTable.items" 
+        [value]="dataTable?.items || []" 
         [scrollable]="true"
         [paginator]="true"
         [showCurrentPageReport]="true" 
         [rows]="50"
-        [totalRecords]="dataTable.totalCount"
+        [totalRecords]="dataTable?.totalCount || 0"
         [rowsPerPageOptions]="[{ showAll: 'Tất cả' },50,100,150]"
         [globalFilterFields]="['title']"
         styleClass="p-datatable-gridlines"
@@ -31,7 +29,7 @@
                     placeholder="Tìm kiếm bài viết">         
             </span>
             <button 
-                [routerLink]="'./0'"
+                [routerLink]="[routingEnum.VeChungToiPostPage]"
                 pButton type="button" 
                 label="Thêm mới" 
                 icon="pi pi-plus" 

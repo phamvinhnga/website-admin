@@ -1,3 +1,5 @@
+import { OptionCriteriaRequest } from "../enums/option-criteria.enum";
+
 export class BasePaginationInputDto {
   maxCountResult: number = 999999;
   skipCount: number = 0;
@@ -9,13 +11,6 @@ export class BaseCriteriaRequestDto {
   property: string | undefined;
   option: OptionCriteriaRequest | undefined;
   value: string | undefined;
-}
-
-export enum OptionCriteriaRequest {
-  Equals,
-  NotEquals,
-  Contains,
-  StartsWith,
 }
 
 export interface IBasePaginationOutputDto<TEntity> {
