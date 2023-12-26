@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,6 +16,9 @@ import { MessageService } from 'primeng/api';
 import { LoginPageTypeResolver } from './resolvers/page-type.resolver';
 import { AuthGuard } from './guards/auth.guard';
 import { LoginPageGroupActions } from './states/login-page/login-page.actions';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { HttpLoaderFactory } from './functions/language.function';
+import { AuthLocalStorageEnum } from './enums/local-storage.enum';
 @NgModule({
   declarations: [
     AppComponent
@@ -25,6 +28,13 @@ import { LoginPageGroupActions } from './states/login-page/login-page.actions';
     ToastModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot(),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+      }
+    }),
     BrowserModule,
     BrowserAnimationsModule,
     CommonModule,
@@ -49,7 +59,11 @@ import { LoginPageGroupActions } from './states/login-page/login-page.actions';
 })
 export class AppModule {
 
-  constructor(private store:Store){
+  constructor(private translate:TranslateService, private store:Store){
+    let language = localStorage.getItem(AuthLocalStorageEnum.Language) || 'vi';
+    localStorage.setItem(AuthLocalStorageEnum.Language, language);
+    translate.setDefaultLang(language);
+    translate.use(language);
     this.store.dispatch(LoginPageGroupActions.storeTokenFromLocalStoreAction());
   }
 }

@@ -1,3 +1,5 @@
+import { HttpClient } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import * as _ from "lodash";
 
 export function ConvertViToEn(str:string) : string{
@@ -15,4 +17,8 @@ export function ConvertViToEn(str:string) : string{
     str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // Â, Ê, Ă, Ơ, Ư
     str = str.replace(/[^a-zA-Z-0-9-]/g, "-");
     return str.toLowerCase()
+}
+
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }

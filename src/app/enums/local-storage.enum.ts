@@ -1,4 +1,5 @@
 export enum AuthLocalStorageEnum {
     AccessToken = "AccessToken",
-    RefreshToken = "RefreshToken"
+    RefreshToken = "RefreshToken",
+    Language = "Language"
 }

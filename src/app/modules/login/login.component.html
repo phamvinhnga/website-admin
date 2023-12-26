@@ -3,12 +3,12 @@
     <form class="width-300 m-auto">
       <h3>Đăng nhập hệ thống</h3>
       <div class="form-group first">
-        <label for="username">Tài khoản (*)</label>
+        <label for="username">{{ 'loginPage.username' | translate }} (*)</label>
         <input type="text" class="form-control" placeholder="your-email@gmail.com" name="username"
           [(ngModel)]="username">
       </div>
       <div class="form-group last mb-3">
-        <label for="password">Mật khẩu (*)</label>
+        <label for="password">{{ 'loginPage.password' | translate }} (*)</label>
         <input type="password" class="form-control" placeholder="Your Password" name="password" [(ngModel)]="password">
       </div>
       <input type="submit" (click)="onSubmit()" class="btn btn-block btn-primary">
