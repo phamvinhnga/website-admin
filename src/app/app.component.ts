@@ -4,9 +4,9 @@ import { NavigationEnd, Router } from '@angular/router';
 import { RoutingEnum } from './enums/routing.enum';
 import { DOCUMENT } from '@angular/common';
 import { Subscription, filter } from 'rxjs';
-import { LayoutService } from './module/layout/service/app.layout.service';
-import { AppSidebarComponent } from './module/layout/app.sidebar.component';
-import { AppTopBarComponent } from './module/layout/app.topbar.component';
+import { LayoutService } from './modules/layout/service/app.layout.service';
+import { AppSidebarComponent } from './modules/layout/app.sidebar.component';
+import { AppTopBarComponent } from './modules/layout/app.topbar.component';
 
 @Component({
   selector: 'app-root',
