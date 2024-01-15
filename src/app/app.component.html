@@ -1,1 +1,21 @@
-<router-outlet></router-outlet>
+<container-element [ngSwitch]="pageType">
+    <some-element *ngSwitchCase="pageTypeEnum.Login">
+        <router-outlet></router-outlet>
+    </some-element>
+    <some-element *ngSwitchCase="pageTypeEnum.Manage">
+        <div id="cms" class="layout-wrapper" [ngClass]="containerClass">
+            <app-topbar></app-topbar>
+            <div class="layout-sidebar">
+                <app-sidebar></app-sidebar>
+            </div>
+            <div class="layout-main-container">
+                <div class="layout-main">
+                    <router-outlet></router-outlet>
+                </div>
+                <app-footer></app-footer>
+            </div>
+            <div class="layout-mask"></div>
+        </div>
+        <p-toast></p-toast>
+    </some-element>
+</container-element>
